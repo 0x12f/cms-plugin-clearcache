@@ -9,11 +9,11 @@ use Slim\Http\Response;
 
 class ClearCachePlugin extends Plugin
 {
-    const NAME          = "ClearCachePlugin";
-    const TITLE         = "ClearCache";
-    const DESCRIPTION   = "Плагин для очистки кеш данных";
-    const AUTHOR        = "Aleksey Ilyin";
-    const AUTHOR_SITE   = "https://site.0x12f.com";
+    const NAME = 'ClearCachePlugin';
+    const TITLE = 'ClearCache';
+    const DESCRIPTION = 'Плагин для очистки кеш данных';
+    const AUTHOR = 'Aleksey Ilyin';
+    const AUTHOR_SITE = 'https://site.0x12f.com';
 
     public function __construct(ContainerInterface $container)
     {
@@ -30,7 +30,7 @@ class ClearCachePlugin extends Plugin
             'args' => [
                 'option' => [
                     'off' => 'Выключена',
-                    'on'  => 'Включена',
+                    'on' => 'Включена',
                 ],
             ],
         ]);
@@ -42,7 +42,7 @@ class ClearCachePlugin extends Plugin
             'args' => [
                 'option' => [
                     'off' => 'Выключена',
-                    'on'  => 'Включена',
+                    'on' => 'Включена',
                 ],
             ],
         ]);
@@ -54,7 +54,7 @@ class ClearCachePlugin extends Plugin
             'args' => [
                 'option' => [
                     'off' => 'Выключена',
-                    'on'  => 'Включена',
+                    'on' => 'Включена',
                 ],
             ],
         ]);

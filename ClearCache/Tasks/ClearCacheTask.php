@@ -6,6 +6,8 @@ use App\Domain\Tasks\Task;
 
 class ClearCacheTask extends Task
 {
+    public const TITLE = 'Очистка кеша';
+
     public function execute(array $params = []): \App\Domain\Entities\Task
     {
         $default = [];
@@ -23,7 +25,15 @@ class ClearCacheTask extends Task
             $this->logger->info('ClearCache: remove task data');
             $taskRepository = $this->entityManager->getRepository(\App\Domain\Entities\Task::class);
 
-            foreach ($taskRepository->findBy(['status' => \App\Domain\Types\TaskStatusType::STATUS_DONE]) as $model) {
+            foreach (
+                $taskRepository->findBy([
+                    'status' => [
+                        \App\Domain\Types\TaskStatusType::STATUS_DONE,
+                        \App\Domain\Types\TaskStatusType::STATUS_CANCEL,
+                        \App\Domain\Types\TaskStatusType::STATUS_FAIL,
+                    ],
+                ]) as $model
+            ) {
                 $this->entityManager->remove($model);
             }
 
