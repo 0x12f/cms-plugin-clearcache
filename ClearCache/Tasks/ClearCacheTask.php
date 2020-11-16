@@ -1,10 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Plugin\ClearCache\Tasks;
 
-use App\Domain\Tasks\Task;
+use App\Domain\AbstractTask;
+use App\Domain\Service\Notification\NotificationService;
+use App\Domain\Service\Task\TaskService;
 
-class ClearCacheTask extends Task
+class ClearCacheTask extends AbstractTask
 {
     public const TITLE = 'Очистка кеша';
 
@@ -16,42 +18,39 @@ class ClearCacheTask extends Task
         return parent::execute($params);
     }
 
-    protected function action(array $args = [])
+    protected function action(array $args = []): void
     {
         $this->logger->info('ClearCache: remove cache files');
         @exec('rm -rf ' . CACHE_DIR . '/*');
 
-        if ($this->getParameter('ClearCachePlugin_tasks', 'off') === 'on') {
+        if ($this->parameter('ClearCachePlugin_tasks', 'off') === 'on') {
             $this->logger->info('ClearCache: remove task data');
-            $taskRepository = $this->entityManager->getRepository(\App\Domain\Entities\Task::class);
+            $taskService = TaskService::getWithContainer($this->container);
 
             foreach (
-                $taskRepository->findBy([
+                $taskService->read([
                     'status' => [
                         \App\Domain\Types\TaskStatusType::STATUS_DONE,
                         \App\Domain\Types\TaskStatusType::STATUS_CANCEL,
                         \App\Domain\Types\TaskStatusType::STATUS_FAIL,
+                        \App\Domain\Types\TaskStatusType::STATUS_DELETE,
                     ],
                 ]) as $model
             ) {
-                $this->entityManager->remove($model);
+                $taskService->delete($model);
             }
-
-            $this->entityManager->flush();
         }
 
-        if ($this->getParameter('ClearCachePlugin_notify', 'off') === 'on') {
+        if ($this->parameter('ClearCachePlugin_notify', 'off') === 'on') {
             $this->logger->info('ClearCache: remove notify');
-            $taskRepository = $this->entityManager->getRepository(\App\Domain\Entities\Notification::class);
+            $notificationService = NotificationService::getWithContainer($this->container);
 
-            foreach ($taskRepository->findAll() as $model) {
+            foreach ($notificationService->read() as $model) {
                 $this->entityManager->remove($model);
             }
-
-            $this->entityManager->flush();
         }
 
-        if ($this->getParameter('ClearCachePlugin_log', 'off') === 'on') {
+        if ($this->parameter('ClearCachePlugin_log', 'off') === 'on') {
             $this->logger->info('ClearCache: remove log files');
             @exec('rm -rf ' . LOG_DIR . '/*');
         }

@@ -1,19 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Plugin\ClearCache;
 
-use App\Application\Plugin;
+use App\Domain\AbstractPlugin;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class ClearCachePlugin extends Plugin
+class ClearCachePlugin extends AbstractPlugin
 {
     const NAME = 'ClearCachePlugin';
     const TITLE = 'ClearCache';
     const DESCRIPTION = 'Плагин для очистки кеш данных';
     const AUTHOR = 'Aleksey Ilyin';
     const AUTHOR_SITE = 'https://site.0x12f.com';
+    const VERSION = '2.0';
 
     public function __construct(ContainerInterface $container)
     {
@@ -60,13 +61,13 @@ class ClearCachePlugin extends Plugin
         ]);
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function before(Request $request, Response $response, string $routeName): Response
     {
         return $response;
     }
 
-    /** @inheritDoc */
+    /** {@inheritdoc} */
     public function after(Request $request, Response $response, string $routeName): Response
     {
         return $response;
