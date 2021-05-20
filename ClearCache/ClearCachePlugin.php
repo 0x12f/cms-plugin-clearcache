@@ -10,11 +10,11 @@ use Slim\Http\Response;
 class ClearCachePlugin extends AbstractPlugin
 {
     const NAME = 'ClearCachePlugin';
-    const TITLE = 'ClearCache';
+    const TITLE = 'Очистка кеш данных';
     const DESCRIPTION = 'Плагин для очистки кеш данных';
     const AUTHOR = 'Aleksey Ilyin';
-    const AUTHOR_SITE = 'https://site.0x12f.com';
-    const VERSION = '2.0';
+    const AUTHOR_SITE = 'https://getwebspace.org';
+    const VERSION = '2.1';
 
     public function __construct(ContainerInterface $container)
     {
