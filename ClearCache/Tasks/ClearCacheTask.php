@@ -59,7 +59,7 @@ class ClearCacheTask extends AbstractTask
             $this->logger->info('ClearCache: update search index');
 
             $task = new \App\Domain\Tasks\SearchIndexTask($this->container);
-            $task->execute(['uuid' => $this->convertImageUuids]);
+            $task->execute();
             \App\Domain\AbstractTask::worker($task);
         }
 

@@ -14,7 +14,7 @@ class ClearCachePlugin extends AbstractPlugin
     const DESCRIPTION = 'Плагин для очистки кеш данных';
     const AUTHOR = 'Aleksey Ilyin';
     const AUTHOR_SITE = 'https://getwebspace.org';
-    const VERSION = '2.1';
+    const VERSION = '2.2';
 
     public function __construct(ContainerInterface $container)
     {
