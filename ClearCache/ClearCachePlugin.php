@@ -59,17 +59,17 @@ class ClearCachePlugin extends AbstractPlugin
                 ],
             ],
         ]);
-    }
-
-    /** {@inheritdoc} */
-    public function before(Request $request, Response $response, string $routeName): Response
-    {
-        return $response;
-    }
-
-    /** {@inheritdoc} */
-    public function after(Request $request, Response $response, string $routeName): Response
-    {
-        return $response;
+        $this->addSettingsField([
+            'label' => 'Обновлять поисковый индекс',
+            'description' => 'Включить чтобы обновить индекс после очистки',
+            'type' => 'select',
+            'name' => 'search',
+            'args' => [
+                'option' => [
+                    'off' => 'Выключена',
+                    'on' => 'Включена',
+                ],
+            ],
+        ]);
     }
 }

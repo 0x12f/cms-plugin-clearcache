@@ -55,6 +55,14 @@ class ClearCacheTask extends AbstractTask
             @exec('rm -rf ' . LOG_DIR . '/*');
         }
 
+        if ($this->parameter('ClearCachePlugin_search', 'off') === 'on') {
+            $this->logger->info('ClearCache: update search index');
+
+            $task = new \App\Domain\Tasks\SearchIndexTask($this->container);
+            $task->execute(['uuid' => $this->convertImageUuids]);
+            \App\Domain\AbstractTask::worker($task);
+        }
+
         $this->setStatusDone();
     }
 }
