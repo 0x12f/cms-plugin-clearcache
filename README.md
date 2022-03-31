@@ -1,11 +1,11 @@
-ClearCache для WebSpace Engine
+ClearCache for WebSpace Engine
 ====
-######(Плагин)
+######(Plugin)
 
-Плагин для очистки кеш данных.
+Plugin for clearing cache data.
 
-#### Установка
-Поместить в папку `plugin` и подключить в `index.php` добавив строку:
+#### Install
+Put in `plugin` folder and setup in `installed.php` file:
 ```php
 // clearcache plugin
 $plugins->register(new \Plugin\ClearCache\ClearCachePlugin($container));
