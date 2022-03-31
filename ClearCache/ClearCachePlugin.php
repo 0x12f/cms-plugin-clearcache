@@ -4,8 +4,6 @@ namespace Plugin\ClearCache;
 
 use App\Domain\AbstractPlugin;
 use Psr\Container\ContainerInterface;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 class ClearCachePlugin extends AbstractPlugin
 {
@@ -14,7 +12,7 @@ class ClearCachePlugin extends AbstractPlugin
     const DESCRIPTION = 'Плагин для очистки кеш данных';
     const AUTHOR = 'Aleksey Ilyin';
     const AUTHOR_SITE = 'https://getwebspace.org';
-    const VERSION = '2.2';
+    const VERSION = '2.2.1';
 
     public function __construct(ContainerInterface $container)
     {
