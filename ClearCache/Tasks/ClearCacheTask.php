@@ -3,14 +3,14 @@
 namespace Plugin\ClearCache\Tasks;
 
 use App\Domain\AbstractTask;
-use App\Domain\Service\Notification\NotificationService;
 use App\Domain\Service\Task\TaskService;
+use App\Domain\Casts\Task\Status as TaskStatus;
 
 class ClearCacheTask extends AbstractTask
 {
     public const TITLE = 'Очистка кеша';
 
-    public function execute(array $params = []): \App\Domain\Entities\Task
+    public function execute(array $params = []): \App\Domain\Models\Task
     {
         $default = [];
         $params = array_merge($default, $params);
@@ -25,28 +25,19 @@ class ClearCacheTask extends AbstractTask
 
         if ($this->parameter('ClearCachePlugin_tasks', 'off') === 'on') {
             $this->logger->info('ClearCache: remove task data');
-            $taskService = TaskService::getWithContainer($this->container);
+            $taskService= $this->container->get(TaskService::class);
 
             foreach (
                 $taskService->read([
                     'status' => [
-                        \App\Domain\Types\TaskStatusType::STATUS_DONE,
-                        \App\Domain\Types\TaskStatusType::STATUS_CANCEL,
-                        \App\Domain\Types\TaskStatusType::STATUS_FAIL,
-                        \App\Domain\Types\TaskStatusType::STATUS_DELETE,
+                        TaskStatus::DONE,
+                        TaskStatus::CANCEL,
+                        TaskStatus::FAIL,
+                        TaskStatus::DELETE,
                     ],
                 ]) as $model
             ) {
                 $taskService->delete($model);
-            }
-        }
-
-        if ($this->parameter('ClearCachePlugin_notify', 'off') === 'on') {
-            $this->logger->info('ClearCache: remove notify');
-            $notificationService = NotificationService::getWithContainer($this->container);
-
-            foreach ($notificationService->read() as $model) {
-                $this->entityManager->remove($model);
             }
         }
 

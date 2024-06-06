@@ -12,7 +12,7 @@ class ClearCachePlugin extends AbstractPlugin
     const DESCRIPTION = 'Плагин для очистки кеш данных';
     const AUTHOR = 'Aleksey Ilyin';
     const AUTHOR_SITE = 'https://getwebspace.org';
-    const VERSION = '2.2.1';
+    const VERSION = '3.0.0';
 
     public function __construct(ContainerInterface $container)
     {
@@ -26,18 +26,6 @@ class ClearCachePlugin extends AbstractPlugin
             'description' => 'Включить в чистку информацию о выполненных задачах',
             'type' => 'select',
             'name' => 'tasks',
-            'args' => [
-                'option' => [
-                    'off' => 'Выключена',
-                    'on' => 'Включена',
-                ],
-            ],
-        ]);
-        $this->addSettingsField([
-            'label' => 'Уведомления',
-            'description' => 'Включить в чистку старые уведомления',
-            'type' => 'select',
-            'name' => 'notify',
             'args' => [
                 'option' => [
                     'off' => 'Выключена',
